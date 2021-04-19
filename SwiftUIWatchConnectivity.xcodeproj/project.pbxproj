@@ -8,13 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		C24E0913262D382A00FFD5FE /* SwiftUIWatchConnectivityApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E0912262D382A00FFD5FE /* SwiftUIWatchConnectivityApp.swift */; };
-		C24E0915262D382A00FFD5FE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E0914262D382A00FFD5FE /* ContentView.swift */; };
 		C24E0917262D382B00FFD5FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C24E0916262D382B00FFD5FE /* Assets.xcassets */; };
 		C24E091A262D382B00FFD5FE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C24E0919262D382B00FFD5FE /* Preview Assets.xcassets */; };
 		C24E091F262D382B00FFD5FE /* SwiftUIWatchConnectivity WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C24E091E262D382B00FFD5FE /* SwiftUIWatchConnectivity WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C24E0924262D382C00FFD5FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C24E0923262D382C00FFD5FE /* Assets.xcassets */; };
 		C24E092B262D382C00FFD5FE /* SwiftUIWatchConnectivity WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C24E092A262D382C00FFD5FE /* SwiftUIWatchConnectivity WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		C24E0930262D382C00FFD5FE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E092F262D382C00FFD5FE /* ContentView.swift */; };
 		C24E0932262D382C00FFD5FE /* SwiftUIWatchConnectivityApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E0931262D382C00FFD5FE /* SwiftUIWatchConnectivityApp.swift */; };
 		C24E0934262D382C00FFD5FE /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E0933262D382C00FFD5FE /* ComplicationController.swift */; };
 		C24E0936262D382C00FFD5FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C24E0935262D382C00FFD5FE /* Assets.xcassets */; };
@@ -321,7 +319,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C24E094E262D384E00FFD5FE /* Counter.swift in Sources */,
-				C24E0915262D382A00FFD5FE /* ContentView.swift in Sources */,
 				C24E0950262D384E00FFD5FE /* SessionDelegator.swift in Sources */,
 				C24E0913262D382A00FFD5FE /* SwiftUIWatchConnectivityApp.swift in Sources */,
 				C24E094C262D384E00FFD5FE /* ContentView.swift in Sources */,
@@ -335,7 +332,6 @@
 				C24E094F262D384E00FFD5FE /* Counter.swift in Sources */,
 				C24E0932262D382C00FFD5FE /* SwiftUIWatchConnectivityApp.swift in Sources */,
 				C24E0951262D384E00FFD5FE /* SessionDelegator.swift in Sources */,
-				C24E0930262D382C00FFD5FE /* ContentView.swift in Sources */,
 				C24E094D262D384E00FFD5FE /* ContentView.swift in Sources */,
 				C24E0934262D382C00FFD5FE /* ComplicationController.swift in Sources */,
 			);
