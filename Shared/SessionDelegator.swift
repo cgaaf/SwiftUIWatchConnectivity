@@ -18,21 +18,15 @@ class SessionDelegater: NSObject, WCSessionDelegate {
     }
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        print("Activated!")
+
     }
     
     // Called when a message is received and the peer doesn't need a response.
     //
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         DispatchQueue.main.async {
-            print("Received message \(message)")
             let count = message["count"] as? Int ?? 99
             self.countSubject.send(count)
-        }
-    }
-    func session(_ session: WCSession, didReceiveMessageData messageData: Data) {
-        DispatchQueue.main.async {
-            print("Received data")
         }
     }
     

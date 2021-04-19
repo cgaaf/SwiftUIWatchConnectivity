@@ -70,7 +70,6 @@
 /* Begin PBXFileReference section */
 		C24E090F262D382A00FFD5FE /* SwiftUIWatchConnectivity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIWatchConnectivity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C24E0912262D382A00FFD5FE /* SwiftUIWatchConnectivityApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIWatchConnectivityApp.swift; sourceTree = "<group>"; };
-		C24E0914262D382A00FFD5FE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C24E0916262D382B00FFD5FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C24E0919262D382B00FFD5FE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C24E091B262D382B00FFD5FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -78,7 +77,6 @@
 		C24E0923262D382C00FFD5FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C24E0925262D382C00FFD5FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C24E092A262D382C00FFD5FE /* SwiftUIWatchConnectivity WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "SwiftUIWatchConnectivity WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C24E092F262D382C00FFD5FE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C24E0931262D382C00FFD5FE /* SwiftUIWatchConnectivityApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIWatchConnectivityApp.swift; sourceTree = "<group>"; };
 		C24E0933262D382C00FFD5FE /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
 		C24E0935262D382C00FFD5FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -132,7 +130,6 @@
 			isa = PBXGroup;
 			children = (
 				C24E0912262D382A00FFD5FE /* SwiftUIWatchConnectivityApp.swift */,
-				C24E0914262D382A00FFD5FE /* ContentView.swift */,
 				C24E0916262D382B00FFD5FE /* Assets.xcassets */,
 				C24E091B262D382B00FFD5FE /* Info.plist */,
 				C24E0918262D382B00FFD5FE /* Preview Content */,
@@ -160,7 +157,6 @@
 		C24E092E262D382C00FFD5FE /* SwiftUIWatchConnectivity WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
-				C24E092F262D382C00FFD5FE /* ContentView.swift */,
 				C24E0931262D382C00FFD5FE /* SwiftUIWatchConnectivityApp.swift */,
 				C24E0933262D382C00FFD5FE /* ComplicationController.swift */,
 				C24E0935262D382C00FFD5FE /* Assets.xcassets */,
