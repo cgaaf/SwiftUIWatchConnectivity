@@ -19,6 +19,12 @@
 		C24E0934262D382C00FFD5FE /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E0933262D382C00FFD5FE /* ComplicationController.swift */; };
 		C24E0936262D382C00FFD5FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C24E0935262D382C00FFD5FE /* Assets.xcassets */; };
 		C24E0939262D382C00FFD5FE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C24E0938262D382C00FFD5FE /* Preview Assets.xcassets */; };
+		C24E094C262D384E00FFD5FE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E0949262D384E00FFD5FE /* ContentView.swift */; };
+		C24E094D262D384E00FFD5FE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E0949262D384E00FFD5FE /* ContentView.swift */; };
+		C24E094E262D384E00FFD5FE /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E094A262D384E00FFD5FE /* Counter.swift */; };
+		C24E094F262D384E00FFD5FE /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E094A262D384E00FFD5FE /* Counter.swift */; };
+		C24E0950262D384E00FFD5FE /* SessionDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E094B262D384E00FFD5FE /* SessionDelegator.swift */; };
+		C24E0951262D384E00FFD5FE /* SessionDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E094B262D384E00FFD5FE /* SessionDelegator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +86,9 @@
 		C24E0935262D382C00FFD5FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C24E0938262D382C00FFD5FE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C24E093A262D382C00FFD5FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C24E0949262D384E00FFD5FE /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C24E094A262D384E00FFD5FE /* Counter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
+		C24E094B262D384E00FFD5FE /* SessionDelegator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDelegator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +112,7 @@
 		C24E0906262D382A00FFD5FE = {
 			isa = PBXGroup;
 			children = (
+				C24E0948262D383200FFD5FE /* Shared */,
 				C24E0911262D382A00FFD5FE /* SwiftUIWatchConnectivity */,
 				C24E0922262D382B00FFD5FE /* SwiftUIWatchConnectivity WatchKit App */,
 				C24E092E262D382C00FFD5FE /* SwiftUIWatchConnectivity WatchKit Extension */,
@@ -168,6 +178,16 @@
 				C24E0938262D382C00FFD5FE /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C24E0948262D383200FFD5FE /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				C24E0949262D384E00FFD5FE /* ContentView.swift */,
+				C24E094A262D384E00FFD5FE /* Counter.swift */,
+				C24E094B262D384E00FFD5FE /* SessionDelegator.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,8 +320,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C24E094E262D384E00FFD5FE /* Counter.swift in Sources */,
 				C24E0915262D382A00FFD5FE /* ContentView.swift in Sources */,
+				C24E0950262D384E00FFD5FE /* SessionDelegator.swift in Sources */,
 				C24E0913262D382A00FFD5FE /* SwiftUIWatchConnectivityApp.swift in Sources */,
+				C24E094C262D384E00FFD5FE /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,8 +332,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C24E094F262D384E00FFD5FE /* Counter.swift in Sources */,
 				C24E0932262D382C00FFD5FE /* SwiftUIWatchConnectivityApp.swift in Sources */,
+				C24E0951262D384E00FFD5FE /* SessionDelegator.swift in Sources */,
 				C24E0930262D382C00FFD5FE /* ContentView.swift in Sources */,
+				C24E094D262D384E00FFD5FE /* ContentView.swift in Sources */,
 				C24E0934262D382C00FFD5FE /* ComplicationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
