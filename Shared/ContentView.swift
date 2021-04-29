@@ -19,6 +19,13 @@ struct ContentView: View {
         #endif
     }
     
+    var changedByLabel: String {
+        switch counter.lastChangedBy {
+        case .this: return "this device"
+        case .that: return "that device"
+        }
+    }
+    
     var body: some View {
         VStack {
             Text("\(counter.count)")
@@ -37,6 +44,8 @@ struct ContentView: View {
             }
             .font(.headline)
             .labelStyle(labelStyle)
+            
+            Text("Last changed by \(changedByLabel)")
         }
     }
 }

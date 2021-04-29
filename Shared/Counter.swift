@@ -12,32 +12,75 @@ import WatchConnectivity
 final class Counter: ObservableObject {
     var session: WCSession
     let delegate: WCSessionDelegate
-    let subject = PassthroughSubject<Int, Never>()
+    let subject = PassthroughSubject<Data, Never>()
+    
+    var cancellables = Set<AnyCancellable>()
     
     @Published private(set) var count: Int = 0
+    @Published private(set) var lastChangedBy: Device = .this
+    @Published private(set) var dateLastChanged = Date()
     
     init(session: WCSession = .default) {
-        self.delegate = SessionDelegater(countSubject: subject)
+        self.delegate = SessionDelegater(subject: subject)
         self.session = session
         self.session.delegate = self.delegate
         self.session.activate()
         
         subject
+            .decode(type: DataPacket<Int>.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
-            .assign(to: &$count)
+            .sink { completion in
+                switch completion {
+                case .failure(let error):
+                    print("THere was an error after decode: \(error.localizedDescription)")
+                case .finished:
+                    print("This publisher completed: SHouldn't happen")
+                }
+            } receiveValue: { packet in
+                let comparison = self.dateLastChanged.compare(packet.dateLastChanged)
+                if comparison == .orderedAscending {
+                    print("That is more recent, updating...")
+                    self.count = packet.data
+                    self.lastChangedBy = .that
+                } else {
+                    print("This is more recent, no update")
+                }
+            }
+            .store(in: &cancellables)
+
     }
     
     func increment() {
         count += 1
-        session.sendMessage(["count": count], replyHandler: nil) { error in
-            print(error.localizedDescription)
-        }
+        lastChangedBy = .this
+        dateLastChanged = Date()
+        send()
     }
     
     func decrement() {
         count -= 1
-        session.sendMessage(["count": count], replyHandler: nil) { error in
+        dateLastChanged = Date()
+        send()
+    }
+    
+    func send() {
+        let sendPacket = DataPacket(dateLastChanged: dateLastChanged, data: count)
+        let data = try! JSONEncoder().encode(sendPacket)
+//        session.sendMessage(["packet": sendPacket]) { returnMessage in
+//            print("Received reply")
+//            print(returnMessage)
+//        } errorHandler: { error in
+//            print("There was an error")
+//            print(error.localizedDescription)
+//        }
+        
+        session.sendMessageData(data, replyHandler: nil) { error in
             print(error.localizedDescription)
         }
+
     }
+}
+
+enum Device {
+    case this, that
 }

@@ -23,6 +23,8 @@
 		C24E094F262D384E00FFD5FE /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E094A262D384E00FFD5FE /* Counter.swift */; };
 		C24E0950262D384E00FFD5FE /* SessionDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E094B262D384E00FFD5FE /* SessionDelegator.swift */; };
 		C24E0951262D384E00FFD5FE /* SessionDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E094B262D384E00FFD5FE /* SessionDelegator.swift */; };
+		C29E993F263B324C009A5BF6 /* DataPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29E993E263B324C009A5BF6 /* DataPacket.swift */; };
+		C29E9940263B324C009A5BF6 /* DataPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29E993E263B324C009A5BF6 /* DataPacket.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +87,7 @@
 		C24E0949262D384E00FFD5FE /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C24E094A262D384E00FFD5FE /* Counter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
 		C24E094B262D384E00FFD5FE /* SessionDelegator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDelegator.swift; sourceTree = "<group>"; };
+		C29E993E263B324C009A5BF6 /* DataPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPacket.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +183,7 @@
 				C24E0949262D384E00FFD5FE /* ContentView.swift */,
 				C24E094A262D384E00FFD5FE /* Counter.swift */,
 				C24E094B262D384E00FFD5FE /* SessionDelegator.swift */,
+				C29E993E263B324C009A5BF6 /* DataPacket.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -318,6 +322,7 @@
 				C24E0950262D384E00FFD5FE /* SessionDelegator.swift in Sources */,
 				C24E0913262D382A00FFD5FE /* SwiftUIWatchConnectivityApp.swift in Sources */,
 				C24E094C262D384E00FFD5FE /* ContentView.swift in Sources */,
+				C29E993F263B324C009A5BF6 /* DataPacket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,6 +335,7 @@
 				C24E0951262D384E00FFD5FE /* SessionDelegator.swift in Sources */,
 				C24E094D262D384E00FFD5FE /* ContentView.swift in Sources */,
 				C24E0934262D382C00FFD5FE /* ComplicationController.swift in Sources */,
+				C29E9940263B324C009A5BF6 /* DataPacket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
