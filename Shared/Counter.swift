@@ -30,7 +30,6 @@ final class Counter: ObservableObject {
     func increment() {
         count += 1
         session.sendMessage(["count": count], replyHandler: nil) { error in
-            print("Failed to send increment()")
             print(error.localizedDescription)
         }
     }
@@ -38,7 +37,6 @@ final class Counter: ObservableObject {
     func decrement() {
         count -= 1
         session.sendMessage(["count": count], replyHandler: nil) { error in
-            print("Failed to send decrement()")
             print(error.localizedDescription)
         }
     }

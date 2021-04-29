@@ -5,7 +5,6 @@
 //  Created by Chris Gaafary on 4/15/21.
 //
 
-import Foundation
 import Combine
 import WatchConnectivity
 
@@ -18,18 +17,23 @@ class SessionDelegater: NSObject, WCSessionDelegate {
     }
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-
+        // Protocol comformance only
+        // Not needed for this demo
     }
     
-    // Called when a message is received and the peer doesn't need a response.
-    //
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         DispatchQueue.main.async {
-            let count = message["count"] as? Int ?? 99
-            self.countSubject.send(count)
+            if let count = message["count"] as? Int {
+                self.countSubject.send(count)
+            } else {
+                print("There was an error")
+            }
+            
         }
     }
     
+    // iOS Protocol comformance
+    // Not needed for this demo otherwise
     #if os(iOS)
     func sessionDidBecomeInactive(_ session: WCSession) {
         print("\(#function): activationState = \(session.activationState.rawValue)")
