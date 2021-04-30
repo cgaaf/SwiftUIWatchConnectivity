@@ -47,32 +47,36 @@ final class Counter: ObservableObject {
                 }
             }
             .store(in: &cancellables)
+        
+        Timer.publish(every: 2, on: .main, in: .default)
+            .autoconnect()
+            .sink { _ in
+                self.send()
+            }
+            .store(in: &cancellables)
 
     }
     
     func increment() {
         count += 1
-        lastChangedBy = .this
-        dateLastChanged = Date()
+        logChange()
         send()
     }
     
     func decrement() {
         count -= 1
-        dateLastChanged = Date()
+        logChange()
         send()
+    }
+    
+    func logChange() {
+        lastChangedBy = .this
+        dateLastChanged = Date()
     }
     
     func send() {
         let sendPacket = DataPacket(dateLastChanged: dateLastChanged, data: count)
         let data = try! JSONEncoder().encode(sendPacket)
-//        session.sendMessage(["packet": sendPacket]) { returnMessage in
-//            print("Received reply")
-//            print(returnMessage)
-//        } errorHandler: { error in
-//            print("There was an error")
-//            print(error.localizedDescription)
-//        }
         
         session.sendMessageData(data, replyHandler: nil) { error in
             print(error.localizedDescription)
