@@ -25,6 +25,13 @@ class SessionDelegater: NSObject, WCSessionDelegate {
         self.subject.send(messageData)
     }
     
+//    func session(_ session: WCSession, didReceiveMessageData messageData: Data, replyHandler: @escaping (Data) -> Void) {
+//        self.subject.send(messageData)
+//        let received = true
+//        let encoded = try! JSONEncoder().encode(received)
+//        replyHandler(encoded)
+//    }
+    
     // iOS Protocol comformance
     // Not needed for this demo otherwise
     #if os(iOS)

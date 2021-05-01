@@ -6,18 +6,45 @@
 	<dict>
 		<key>SwiftUIWatchConnectivity WatchKit App (Complication).xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>1</integer>
 		</dict>
-		<key>SwiftUIWatchConnectivity WatchKit App.xcscheme_^#shared#^_</key>
+		<key>iOS.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>SwiftUIWatchConnectivity.xcscheme_^#shared#^_</key>
+		<key>watchOS Extension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>watchOS.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>2</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>C24E090E262D382A00FFD5FE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C24E091D262D382B00FFD5FE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C24E0929262D382C00FFD5FE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
