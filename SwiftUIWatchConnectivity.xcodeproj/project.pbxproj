@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -25,6 +25,8 @@
 		C24E094D262D384E00FFD5FE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E0949262D384E00FFD5FE /* ContentView.swift */; };
 		C24E0950262D384E00FFD5FE /* SessionDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E094B262D384E00FFD5FE /* SessionDelegator.swift */; };
 		C24E0951262D384E00FFD5FE /* SessionDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E094B262D384E00FFD5FE /* SessionDelegator.swift */; };
+		C265D178263E55F300BDE0A5 /* WatchSync in Frameworks */ = {isa = PBXBuildFile; productRef = C265D177263E55F300BDE0A5 /* WatchSync */; };
+		C265D17B263E56E200BDE0A5 /* WatchSync in Frameworks */ = {isa = PBXBuildFile; productRef = C265D17A263E56E200BDE0A5 /* WatchSync */; };
 		C29E993F263B324C009A5BF6 /* SyncedWatchObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29E993E263B324C009A5BF6 /* SyncedWatchObject.swift */; };
 		C29E9940263B324C009A5BF6 /* SyncedWatchObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29E993E263B324C009A5BF6 /* SyncedWatchObject.swift */; };
 		C29E9942263C3BFE009A5BF6 /* Syncronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29E9941263C3BFE009A5BF6 /* Syncronizer.swift */; };
@@ -101,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C265D178263E55F300BDE0A5 /* WatchSync in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C265D17B263E56E200BDE0A5 /* WatchSync in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,6 +127,7 @@
 				C24E0922262D382B00FFD5FE /* SwiftUIWatchConnectivity WatchKit App */,
 				C24E092E262D382C00FFD5FE /* SwiftUIWatchConnectivity WatchKit Extension */,
 				C24E0910262D382A00FFD5FE /* Products */,
+				C265D179263E56E200BDE0A5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -193,6 +198,13 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
+		C265D179263E56E200BDE0A5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C29E9944263C3C3D009A5BF6 /* Syncronizer */ = {
 			isa = PBXGroup;
 			children = (
@@ -222,6 +234,9 @@
 				C24E0921262D382B00FFD5FE /* PBXTargetDependency */,
 			);
 			name = SwiftUIWatchConnectivity;
+			packageProductDependencies = (
+				C265D177263E55F300BDE0A5 /* WatchSync */,
+			);
 			productName = SwiftUIWatchConnectivity;
 			productReference = C24E090F262D382A00FFD5FE /* SwiftUIWatchConnectivity.app */;
 			productType = "com.apple.product-type.application";
@@ -256,6 +271,9 @@
 			dependencies = (
 			);
 			name = "SwiftUIWatchConnectivity WatchKit Extension";
+			packageProductDependencies = (
+				C265D17A263E56E200BDE0A5 /* WatchSync */,
+			);
 			productName = "SwiftUIWatchConnectivity WatchKit Extension";
 			productReference = C24E092A262D382C00FFD5FE /* SwiftUIWatchConnectivity WatchKit Extension.appex */;
 			productType = "com.apple.product-type.watchkit2-extension";
@@ -289,6 +307,9 @@
 				Base,
 			);
 			mainGroup = C24E0906262D382A00FFD5FE;
+			packageReferences = (
+				C265D176263E55F300BDE0A5 /* XCRemoteSwiftPackageReference "WatchSync" */,
+			);
 			productRefGroup = C24E0910262D382A00FFD5FE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -663,6 +684,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C265D176263E55F300BDE0A5 /* XCRemoteSwiftPackageReference "WatchSync" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cgaaf/WatchSync";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C265D177263E55F300BDE0A5 /* WatchSync */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C265D176263E55F300BDE0A5 /* XCRemoteSwiftPackageReference "WatchSync" */;
+			productName = WatchSync;
+		};
+		C265D17A263E56E200BDE0A5 /* WatchSync */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C265D176263E55F300BDE0A5 /* XCRemoteSwiftPackageReference "WatchSync" */;
+			productName = WatchSync;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C24E0907262D382A00FFD5FE /* Project object */;
 }

@@ -22,7 +22,7 @@ extension WCSession {
     // SUBJECTS
     private let dataSubject = PassthroughSubject<Data, Never>()
     private let deviceSubject = PassthroughSubject<WCSession.Device, Never>()
-    private let valueSubject: CurrentValueSubject<T, Never>
+    private let valueSubject: CurrentValueSubject<T, Error>
     
     // SYNC TIMER RELATED
     let timer: Timer.TimerPublisher
@@ -66,7 +66,7 @@ extension WCSession {
         }
     }
     
-    var projectedValue: CurrentValueSubject<T, Never> {
+    var projectedValue: CurrentValueSubject<T, Error> {
         get { valueSubject }
     }
     
@@ -81,11 +81,7 @@ extension WCSession {
         self.valueSubject = CurrentValueSubject(wrappedValue)
         
         receivedData
-            .sink { _ in
-                fatalError("This should not error, Figure out error handling")
-            } receiveValue: { value in
-                self.valueSubject.value = value
-            }
+            .sink(receiveCompletion: valueSubject.send, receiveValue: valueSubject.send)
             .store(in: &cancellables)
 
     }

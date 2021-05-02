@@ -7,27 +7,24 @@
 
 import Foundation
 import Combine
-import WatchConnectivity
+import WatchSync
 
 final class Counter: ObservableObject {
-    @SyncWrapper var syncedCount: Int
+    @SyncedWatchState var syncedCount: Int
     
     var cancellables = Set<AnyCancellable>()
     
     @Published private(set) var count: Int = 0
-    @Published private(set) var lastChangedBy: WCSession.Device = .thisDevice
+    @Published private(set) var lastChangedBy: Device = .thisDevice
     
     init() {
-        _syncedCount = SyncWrapper(wrappedValue: 0)
+        _syncedCount = SyncedWatchState(wrappedValue: 0)
         _syncedCount.mostRecentDataChangedByDevice.assign(to: &$lastChangedBy)
 
         $syncedCount
-            .sink { _ in
-                print("There was a problem")
-            } receiveValue: { int in
-                self.count = int
-            }
-            .store(in: &cancellables)
+            .breakpointOnError()
+            .replaceError(with: count)
+            .assign(to: &$count)
     }
     
     func increment() {

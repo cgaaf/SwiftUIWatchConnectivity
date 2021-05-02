@@ -19,8 +19,8 @@ extension WCSession {
         let delegate: WCSessionDelegate
         
         // Internal record keeping
-        var dateLastChanged = Date()
-        var latestPacketSent: Data?
+        var cacheDate = Date()
+        var cachedEncodedObjectData: Data?
         
         // SYNC TIMER RELATED
         let timer: Timer.TimerPublisher
@@ -42,12 +42,12 @@ extension WCSession {
                 .removeDuplicates()
                 .decode(type: SyncedWatchObject<T>.self, decoder: JSONDecoder())
                 .handleEvents(receiveOutput: { dataPacket in
-                    if self.dateLastChanged < dataPacket.dateModified {
+                    if self.cacheDate < dataPacket.dateModified {
                         self.deviceSubject.send(.otherDevice)
                     }
                 })
                 .filter({ dataPacket in
-                    self.dateLastChanged < dataPacket.dateModified
+                    self.cacheDate < dataPacket.dateModified
                 })
                 .map(\.object)
                 .receive(on: DispatchQueue.main)
@@ -64,11 +64,10 @@ extension WCSession {
         }
         
         func send(_ data: T) {
-            updateLastChange()
-            
-            let dataPacket = SyncedWatchObject(dateModified: dateLastChanged, object: data)
+            let dataPacket = SyncedWatchObject(dateModified: cacheDate, object: data)
             let encoded = try! JSONEncoder().encode(dataPacket)
-            latestPacketSent = encoded
+            cacheObject(encodedData: encoded)
+            deviceSubject.send(.thisDevice)
             
             if session.isReachable {
                 transmit(encoded)
@@ -77,7 +76,7 @@ extension WCSession {
                 timerSubscription = timer
                     .autoconnect()
                     .sink { _ in
-                        if let latestPacketSent = self.latestPacketSent {
+                        if let latestPacketSent = self.cachedEncodedObjectData {
                             self.transmit(latestPacketSent)
                         }
                     }
@@ -94,9 +93,9 @@ extension WCSession {
             }
         }
         
-        func updateLastChange() {
-            dateLastChanged = Date()
-            deviceSubject.send(.thisDevice)
+        func cacheObject(encodedData: Data) {
+            cacheDate = Date()
+            cachedEncodedObjectData = encodedData
         }
         
         func receive<T: Codable>(type: T.Type) -> AnyPublisher<T, Error> {
@@ -104,12 +103,12 @@ extension WCSession {
                 .removeDuplicates()
                 .decode(type: SyncedWatchObject<T>.self, decoder: JSONDecoder())
                 .handleEvents(receiveOutput: { dataPacket in
-                    if self.dateLastChanged < dataPacket.dateModified {
+                    if self.cacheDate < dataPacket.dateModified {
                         self.deviceSubject.send(.otherDevice)
                     }
                 })
                 .filter({ dataPacket in
-                    self.dateLastChanged < dataPacket.dateModified
+                    self.cacheDate < dataPacket.dateModified
                 })
                 .map(\.object)
                 .receive(on: DispatchQueue.main)
