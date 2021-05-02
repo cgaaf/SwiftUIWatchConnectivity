@@ -9,6 +9,5 @@ import Foundation
 
 struct DataPacket<T: Codable>: Codable {
     let dateLastChanged: Date
-    let creationDate: Date
     let data: T
 }

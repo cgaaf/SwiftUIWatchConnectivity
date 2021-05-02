@@ -66,7 +66,7 @@ extension WCSession {
         func send(_ data: T) {
             updateLastChange()
             
-            let dataPacket = DataPacket(dateLastChanged: dateLastChanged, creationDate: Date(), data: data)
+            let dataPacket = DataPacket(dateLastChanged: dateLastChanged, data: data)
             let encoded = try! JSONEncoder().encode(dataPacket)
             latestPacketSent = encoded
             
