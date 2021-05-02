@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "WatchSync",
+        "repositoryURL": "https://github.com/cgaaf/WatchSync",
+        "state": {
+          "branch": "main",
+          "revision": "3d7a4ccde735f9c496b17d8e88c826bc45790cac",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
