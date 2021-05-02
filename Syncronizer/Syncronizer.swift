@@ -10,36 +10,60 @@ import Combine
 import WatchConnectivity
 
 extension WCSession {
-    static let syncronizer: Syncronizer = Syncronizer()
+    static func getSyncronizer<T: Codable>(type: T.Type) -> Syncronizer<T> {
+        return Syncronizer(type: T.self)
+    }
     
-    final class Syncronizer {
+    final class Syncronizer<T: Codable> {
         var session: WCSession
         let delegate: WCSessionDelegate
         
-        @Published var dateLastChanged = Date()
+        // Internal record keeping
+        var dateLastChanged = Date()
         var latestPacketSent: Data?
         
+        // SYNC TIMER RELATED
+        let timer: Timer.TimerPublisher
         var timerSubscription: AnyCancellable?
         
-        // PUBLISHERS
+        // SUBJECTS
         private let dataSubject = PassthroughSubject<Data, Never>()
         private let deviceSubject = PassthroughSubject<Device, Never>()
         
         // PUBLISHERS
-        var device: AnyPublisher<Device, Never> {
+        var mostRecentDataChangedByDevice: AnyPublisher<Device, Never> {
             deviceSubject
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
         
-        init(session: WCSession = .default) {
+        var receivedData: AnyPublisher<T, Error> {
+            dataSubject
+                .removeDuplicates()
+                .decode(type: DataPacket<T>.self, decoder: JSONDecoder())
+                .handleEvents(receiveOutput: { dataPacket in
+                    if self.dateLastChanged < dataPacket.dateLastChanged {
+                        self.deviceSubject.send(.otherDevice)
+                    }
+                })
+                .filter({ dataPacket in
+                    self.dateLastChanged < dataPacket.dateLastChanged
+                })
+                .map(\.data)
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
+        
+        init<T: Codable>(session: WCSession = .default, syncTime: TimeInterval = 2, type: T.Type) {
             self.delegate = SessionDelegater(subject: dataSubject)
             self.session = session
             self.session.delegate = self.delegate
             self.session.activate()
+            
+            self.timer = Timer.publish(every: syncTime, on: .main, in: .default)
         }
         
-        func send<T: Codable>(_ data: T) {
+        func send(_ data: T) {
             updateLastChange()
             
             let dataPacket = DataPacket(dateLastChanged: dateLastChanged, creationDate: Date(), data: data)
@@ -50,7 +74,7 @@ extension WCSession {
                 transmit(encoded)
             } else {
                 print("Session not current reachable, starting timer")
-                timerSubscription = Timer.publish(every: 2, on: .main, in: .default)
+                timerSubscription = timer
                     .autoconnect()
                     .sink { _ in
                         if let latestPacketSent = self.latestPacketSent {
@@ -72,7 +96,7 @@ extension WCSession {
         
         func updateLastChange() {
             dateLastChanged = Date()
-            deviceSubject.send(.this)
+            deviceSubject.send(.thisDevice)
         }
         
         func receive<T: Codable>(type: T.Type) -> AnyPublisher<T, Error> {
@@ -81,7 +105,7 @@ extension WCSession {
                 .decode(type: DataPacket<T>.self, decoder: JSONDecoder())
                 .handleEvents(receiveOutput: { dataPacket in
                     if self.dateLastChanged < dataPacket.dateLastChanged {
-                        self.deviceSubject.send(.that)
+                        self.deviceSubject.send(.otherDevice)
                     }
                 })
                 .filter({ dataPacket in

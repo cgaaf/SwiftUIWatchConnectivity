@@ -21,8 +21,8 @@ struct ContentView: View {
     
     var changedByLabel: String {
         switch counter.lastChangedBy {
-        case .this: return "this device"
-        case .that: return "that device"
+        case .thisDevice: return "this device"
+        case .otherDevice: return "that device"
         }
     }
     

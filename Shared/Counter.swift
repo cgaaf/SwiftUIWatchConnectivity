@@ -10,47 +10,31 @@ import Combine
 import WatchConnectivity
 
 final class Counter: ObservableObject {
-    var syncronizer = WCSession.syncronizer
+    @SyncWrapper var syncedCount: Int
     
     var cancellables = Set<AnyCancellable>()
     
     @Published private(set) var count: Int = 0
-    @Published private(set) var lastChangedBy: Device = .this
+    @Published private(set) var lastChangedBy: WCSession.Device = .thisDevice
     
     init() {
-        let stream = syncronizer.receive(type: Int.self)
-        
-        stream
-            .sink { completion in
-                switch completion {
-                case .failure(let error):
-                    print("THere was an error after decode: \(error.localizedDescription)")
-                case .finished:
-                    print("This publisher completed: Shouldn't happen")
-                }
+        _syncedCount = SyncWrapper(wrappedValue: 0)
+        _syncedCount.mostRecentDataChangedByDevice.assign(to: &$lastChangedBy)
+
+        $syncedCount
+            .sink { _ in
+                print("There was a problem")
             } receiveValue: { int in
                 self.count = int
             }
             .store(in: &cancellables)
-        
-        syncronizer.device.assign(to: &$lastChangedBy)
     }
     
     func increment() {
-        count += 1
-        send()
+        syncedCount += 1
     }
     
     func decrement() {
-        count -= 1
-        send()
+        syncedCount -= 1
     }
-    
-    func send() {
-        syncronizer.send(count)
-    }
-}
-
-enum Device {
-    case this, that
 }
