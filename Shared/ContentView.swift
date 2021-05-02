@@ -22,7 +22,7 @@ struct ContentView: View {
     var changedByLabel: String {
         switch counter.lastChangedBy {
         case .thisDevice: return "this device"
-        case .otherDevice: return "that device"
+        case .otherDevice: return "other device"
         }
     }
     
