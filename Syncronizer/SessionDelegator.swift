@@ -22,6 +22,7 @@ class SessionDelegater: NSObject, WCSessionDelegate {
     }
     
     func session(_ session: WCSession, didReceiveMessageData messageData: Data, replyHandler: @escaping (Data) -> Void) {
+        print("Received data")
         self.subject.send(messageData)
         replyHandler(Data())
     }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DataPacket<T: Codable>: Codable {
-    let dateLastChanged: Date
-    let data: T
+struct SyncedWatchObject<T: Codable>: Codable {
+    let dateModified: Date
+    let object: T
 }

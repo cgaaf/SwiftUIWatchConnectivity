@@ -40,16 +40,16 @@ extension WCSession {
         var receivedData: AnyPublisher<T, Error> {
             dataSubject
                 .removeDuplicates()
-                .decode(type: DataPacket<T>.self, decoder: JSONDecoder())
+                .decode(type: SyncedWatchObject<T>.self, decoder: JSONDecoder())
                 .handleEvents(receiveOutput: { dataPacket in
-                    if self.dateLastChanged < dataPacket.dateLastChanged {
+                    if self.dateLastChanged < dataPacket.dateModified {
                         self.deviceSubject.send(.otherDevice)
                     }
                 })
                 .filter({ dataPacket in
-                    self.dateLastChanged < dataPacket.dateLastChanged
+                    self.dateLastChanged < dataPacket.dateModified
                 })
-                .map(\.data)
+                .map(\.object)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
@@ -66,7 +66,7 @@ extension WCSession {
         func send(_ data: T) {
             updateLastChange()
             
-            let dataPacket = DataPacket(dateLastChanged: dateLastChanged, data: data)
+            let dataPacket = SyncedWatchObject(dateModified: dateLastChanged, object: data)
             let encoded = try! JSONEncoder().encode(dataPacket)
             latestPacketSent = encoded
             
@@ -102,16 +102,16 @@ extension WCSession {
         func receive<T: Codable>(type: T.Type) -> AnyPublisher<T, Error> {
             dataSubject
                 .removeDuplicates()
-                .decode(type: DataPacket<T>.self, decoder: JSONDecoder())
+                .decode(type: SyncedWatchObject<T>.self, decoder: JSONDecoder())
                 .handleEvents(receiveOutput: { dataPacket in
-                    if self.dateLastChanged < dataPacket.dateLastChanged {
+                    if self.dateLastChanged < dataPacket.dateModified {
                         self.deviceSubject.send(.otherDevice)
                     }
                 })
                 .filter({ dataPacket in
-                    self.dateLastChanged < dataPacket.dateLastChanged
+                    self.dateLastChanged < dataPacket.dateModified
                 })
-                .map(\.data)
+                .map(\.object)
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
