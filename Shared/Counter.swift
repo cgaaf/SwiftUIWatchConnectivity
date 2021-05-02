@@ -16,11 +16,9 @@ final class Counter: ObservableObject {
     
     @Published private(set) var count: Int = 0
     @Published private(set) var lastChangedBy: Device = .this
-//    @Published private(set) var dateLastChanged = Date()
     
     init() {
         let stream = syncronizer.receive(type: Int.self)
-        let device = syncronizer.devicePublisher
         
         stream
             .sink { completion in
@@ -35,9 +33,7 @@ final class Counter: ObservableObject {
             }
             .store(in: &cancellables)
         
-        device
-            .assign(to: &$lastChangedBy)
-
+        syncronizer.device.assign(to: &$lastChangedBy)
     }
     
     func increment() {

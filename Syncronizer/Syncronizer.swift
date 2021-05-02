@@ -16,88 +16,79 @@ extension WCSession {
         var session: WCSession
         let delegate: WCSessionDelegate
         
-        var dateLastChanged = Date()
-        var lastChangedBy: Device = .this
-        var latestPacketSent = Data()
+        @Published var dateLastChanged = Date()
+        var latestPacketSent: Data?
         
-        var cancellables = Set<AnyCancellable>()
+        var timerSubscription: AnyCancellable?
         
         // PUBLISHERS
-        private let subject = PassthroughSubject<Data, Never>()
-        let devicePublisher = PassthroughSubject<Device, Never>()
-        let lastDatePublisher = PassthroughSubject<Date, Never>()
+        private let dataSubject = PassthroughSubject<Data, Never>()
+        private let deviceSubject = PassthroughSubject<Device, Never>()
+        
+        // PUBLISHERS
+        var device: AnyPublisher<Device, Never> {
+            deviceSubject
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
         
         init(session: WCSession = .default) {
-            self.delegate = SessionDelegater(subject: subject)
+            self.delegate = SessionDelegater(subject: dataSubject)
             self.session = session
             self.session.delegate = self.delegate
             self.session.activate()
-            
-            Timer.publish(every: 4, on: .main, in: .default)
-                .autoconnect()
-                .sink { _ in
-                    if self.latestPacketSent.isEmpty == false {
-                        self.transmit(self.latestPacketSent)
-                    }
-                }
-                .store(in: &cancellables)
         }
         
         func send<T: Codable>(_ data: T) {
             updateLastChange()
-            updateLastChangedBy(to: .this)
             
             let dataPacket = DataPacket(dateLastChanged: dateLastChanged, creationDate: Date(), data: data)
             let encoded = try! JSONEncoder().encode(dataPacket)
             latestPacketSent = encoded
             
-            transmit(encoded)
+            if session.isReachable {
+                transmit(encoded)
+            } else {
+                print("Session not current reachable, starting timer")
+                timerSubscription = Timer.publish(every: 2, on: .main, in: .default)
+                    .autoconnect()
+                    .sink { _ in
+                        if let latestPacketSent = self.latestPacketSent {
+                            self.transmit(latestPacketSent)
+                        }
+                    }
+            }
         }
         
         private func transmit(_ data: Data) {
-            session.sendMessageData(data, replyHandler: nil) { error in
+            print("Transmitting")
+            session.sendMessageData(data) { _ in
+                print("Succesul transfer: Cancel timer")
+                self.timerSubscription?.cancel()
+            } errorHandler: { error in
                 print(error.localizedDescription)
             }
-            
-            session.sendMessageData(data) { error in
-                print("There was an error sending data")
-            }
-
-        }
-        
-        func updateLastChangedBy(to device: Device) {
-            self.lastChangedBy = device
-            devicePublisher.send(lastChangedBy)
         }
         
         func updateLastChange() {
             dateLastChanged = Date()
-            lastDatePublisher.send(dateLastChanged)
+            deviceSubject.send(.this)
         }
         
         func receive<T: Codable>(type: T.Type) -> AnyPublisher<T, Error> {
-            subject
-                .handleEvents(receiveOutput: { _ in
-                    print("Received data")
-                })
+            dataSubject
                 .removeDuplicates()
-                .handleEvents(receiveOutput: { _ in
-                    print("Received new data")
-                })
-                .receive(on: DispatchQueue.main)
                 .decode(type: DataPacket<T>.self, decoder: JSONDecoder())
-                .filter({ dataPacket in
-                    let comparison = self.dateLastChanged.compare(dataPacket.dateLastChanged)
-                    if comparison == .orderedAscending {
-                        print("That is more recent, updating...")
-                        self.updateLastChangedBy(to: .that)
-                        return true
-                    } else {
-                        print("This is more recent, no update")
-                        return false
+                .handleEvents(receiveOutput: { dataPacket in
+                    if self.dateLastChanged < dataPacket.dateLastChanged {
+                        self.deviceSubject.send(.that)
                     }
                 })
+                .filter({ dataPacket in
+                    self.dateLastChanged < dataPacket.dateLastChanged
+                })
                 .map(\.data)
+                .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()
         }
     }
