@@ -20,13 +20,7 @@ class SyncedSession: NSObject, WCSessionDelegate {
     }
     
     func updateContext(_ applicationContext: [String : Any]) {
-        do {
-            print("Sending context")
-            try session.updateApplicationContext(applicationContext)
-            
-        } catch {
-            fatalError(error.localizedDescription)
-        }
+        try! session.updateApplicationContext(applicationContext)
         
         session.sendMessage(applicationContext, replyHandler: nil, errorHandler: nil)
         
@@ -46,6 +40,7 @@ class SyncedSession: NSObject, WCSessionDelegate {
     
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         print("Recieved a message")
+        dump(session.receivedApplicationContext)
     }
     
     #if os(iOS)
