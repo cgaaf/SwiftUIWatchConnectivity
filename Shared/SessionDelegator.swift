@@ -9,11 +9,13 @@ import Combine
 import WatchConnectivity
 
 class SessionDelegater: NSObject, WCSessionDelegate {
-    let countSubject: PassthroughSubject<Int, Never>
+    static let shared = SessionDelegater()
     
-    init(countSubject: PassthroughSubject<Int, Never>) {
-        self.countSubject = countSubject
-        super.init()
+    let anySubject = PassthroughSubject<Any?, Never>()
+    
+    var sessionPubisher: AnyPublisher<Any?, Never> {
+        anySubject
+            .eraseToAnyPublisher()
     }
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
@@ -21,14 +23,12 @@ class SessionDelegater: NSObject, WCSessionDelegate {
         // Not needed for this demo
     }
     
-    func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
+    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
+        print("Received new context!")
+        
+        let data = applicationContext["data"]
         DispatchQueue.main.async {
-            if let count = message["count"] as? Int {
-                self.countSubject.send(count)
-            } else {
-                print("There was an error")
-            }
-            
+            self.anySubject.send(data)
         }
     }
     

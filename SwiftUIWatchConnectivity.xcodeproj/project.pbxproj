@@ -23,6 +23,8 @@
 		C24E094F262D384E00FFD5FE /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E094A262D384E00FFD5FE /* Counter.swift */; };
 		C24E0950262D384E00FFD5FE /* SessionDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E094B262D384E00FFD5FE /* SessionDelegator.swift */; };
 		C24E0951262D384E00FFD5FE /* SessionDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E094B262D384E00FFD5FE /* SessionDelegator.swift */; };
+		C2F8C77226518F850096BDC5 /* SyncedSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F8C77126518F850096BDC5 /* SyncedSession.swift */; };
+		C2F8C77326518F850096BDC5 /* SyncedSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F8C77126518F850096BDC5 /* SyncedSession.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +87,7 @@
 		C24E0949262D384E00FFD5FE /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C24E094A262D384E00FFD5FE /* Counter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
 		C24E094B262D384E00FFD5FE /* SessionDelegator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDelegator.swift; sourceTree = "<group>"; };
+		C2F8C77126518F850096BDC5 /* SyncedSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncedSession.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +183,7 @@
 				C24E0949262D384E00FFD5FE /* ContentView.swift */,
 				C24E094A262D384E00FFD5FE /* Counter.swift */,
 				C24E094B262D384E00FFD5FE /* SessionDelegator.swift */,
+				C2F8C77126518F850096BDC5 /* SyncedSession.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -315,6 +319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C24E094E262D384E00FFD5FE /* Counter.swift in Sources */,
+				C2F8C77226518F850096BDC5 /* SyncedSession.swift in Sources */,
 				C24E0950262D384E00FFD5FE /* SessionDelegator.swift in Sources */,
 				C24E0913262D382A00FFD5FE /* SwiftUIWatchConnectivityApp.swift in Sources */,
 				C24E094C262D384E00FFD5FE /* ContentView.swift in Sources */,
@@ -329,6 +334,7 @@
 				C24E0932262D382C00FFD5FE /* SwiftUIWatchConnectivityApp.swift in Sources */,
 				C24E0951262D384E00FFD5FE /* SessionDelegator.swift in Sources */,
 				C24E094D262D384E00FFD5FE /* ContentView.swift in Sources */,
+				C2F8C77326518F850096BDC5 /* SyncedSession.swift in Sources */,
 				C24E0934262D382C00FFD5FE /* ComplicationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -480,7 +486,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 7.4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.1;
 			};
 			name = Debug;
 		};
@@ -505,7 +511,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 7.4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.1;
 			};
 			name = Release;
 		};
@@ -525,7 +531,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 7.4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.1;
 			};
 			name = Debug;
 		};
@@ -546,7 +552,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 7.4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.1;
 			};
 			name = Release;
 		};
