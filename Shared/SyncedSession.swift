@@ -6,12 +6,23 @@
 //
 
 import Foundation
+import Combine
 import WatchConnectivity
 
 class SyncedSession: NSObject, WCSessionDelegate {
     static let shared = SyncedSession()
     
     let session: WCSession = .default
+    
+    let subject = PassthroughSubject<[String : Any], Never>()
+    
+    var publisher: AnyPublisher<[String : Any], Never> {
+        subject
+            .handleEvents(receiveOutput: { _ in
+                print("Received passthrough")
+            })
+            .eraseToAnyPublisher()
+    }
     
     private override init() {
         super.init()
@@ -33,9 +44,11 @@ class SyncedSession: NSObject, WCSessionDelegate {
     }
     
     func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
-        print("Received a context")
         print("Received new context")
         dump(applicationContext)
+        
+        subject.send(applicationContext)
+        
     }
     
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {

@@ -9,14 +9,14 @@ import Combine
 import WatchConnectivity
 
 class SessionDelegater: NSObject, WCSessionDelegate {
-    static let shared = SessionDelegater()
-    
-    let anySubject = PassthroughSubject<Any?, Never>()
-    
-    var sessionPubisher: AnyPublisher<Any?, Never> {
-        anySubject
-            .eraseToAnyPublisher()
-    }
+//    static let shared = SessionDelegater()
+//
+//    let anySubject = PassthroughSubject<Any?, Never>()
+//
+//    var sessionPubisher: AnyPublisher<Any?, Never> {
+//        anySubject
+//            .eraseToAnyPublisher()
+//    }
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         // Protocol comformance only
@@ -26,9 +26,9 @@ class SessionDelegater: NSObject, WCSessionDelegate {
     func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
         print("Received new context!")
         
-        let data = applicationContext["data"]
+//        let data = applicationContext["data"]
         DispatchQueue.main.async {
-            self.anySubject.send(data)
+//            self.anySubject.send(data)
         }
     }
     

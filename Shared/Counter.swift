@@ -13,14 +13,27 @@ final class Counter: ObservableObject {
     let syncedSession: SyncedSession = .shared
     @Published private(set) var count: Int = 0
     
+    init() {
+        syncedSession
+            .publisher
+            .compactMap { $0["count"] as? Data }
+            .decode(type: Int.self, decoder: JSONDecoder())
+            .replaceError(with: 0)
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$count)
+    }
+    
     func increment() {
         count += 1
-        let data: [String: Any] = ["count" : count, "id": UUID().uuidString]
+        let encoded = try! JSONEncoder().encode(count)
+        let data: [String: Any] = ["count" : encoded]
         syncedSession.updateContext(data)
     }
     
     func decrement() {
         count -= 1
-        syncedSession.updateContext(["count" : count])
+        let encoded = try! JSONEncoder().encode(count)
+        let data: [String: Any] = ["count" : encoded]
+        syncedSession.updateContext(data)
     }
 }
