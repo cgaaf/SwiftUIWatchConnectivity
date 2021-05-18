@@ -187,7 +187,6 @@
 				C24E0949262D384E00FFD5FE /* ContentView.swift */,
 				C24E094A262D384E00FFD5FE /* Counter.swift */,
 				C24E094B262D384E00FFD5FE /* SessionDelegator.swift */,
-				C2F8C77126518F850096BDC5 /* SyncedSession.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -196,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				C2816BB926533AA9008898F2 /* SyncedWatchState.swift */,
+				C2F8C77126518F850096BDC5 /* SyncedSession.swift */,
 			);
 			path = "Property Wrapper";
 			sourceTree = "<group>";

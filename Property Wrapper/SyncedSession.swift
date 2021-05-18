@@ -14,13 +14,10 @@ class SyncedSession: NSObject, WCSessionDelegate {
     
     let session: WCSession = .default
     
-    let subject = PassthroughSubject<[String : Any], Never>()
+    private let subject = PassthroughSubject<[String : Any], Never>()
     
     var publisher: AnyPublisher<[String : Any], Never> {
         subject
-            .handleEvents(receiveOutput: { _ in
-                print("Received passthrough")
-            })
             .eraseToAnyPublisher()
     }
     
@@ -31,11 +28,12 @@ class SyncedSession: NSObject, WCSessionDelegate {
     }
     
     func updateContext(_ applicationContext: [String : Any]) {
-        try! session.updateApplicationContext(applicationContext)
-        
-        session.sendMessage(applicationContext, replyHandler: nil, errorHandler: nil)
-        
-        print("Context and message sent")
+        do {
+            try session.updateApplicationContext(applicationContext)
+            print("Context sent")
+        } catch {
+            print("There was an error updating the applicationContext: \(error.localizedDescription)")
+        }
     }
     
     
@@ -44,16 +42,7 @@ class SyncedSession: NSObject, WCSessionDelegate {
     }
     
     func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
-        print("Received new context")
-        dump(applicationContext)
-        
         subject.send(applicationContext)
-        
-    }
-    
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        print("Recieved a message")
-        dump(session.receivedApplicationContext)
     }
     
     #if os(iOS)

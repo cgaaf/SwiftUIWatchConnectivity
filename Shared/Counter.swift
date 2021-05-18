@@ -10,7 +10,7 @@ import Combine
 import WatchConnectivity
 
 final class Counter: ObservableObject {
-    @SyncedWatchState var count: Int = 0
+    @SyncedWatchState("Key") var count: Int = 0
     
     func increment() {
         count += 1

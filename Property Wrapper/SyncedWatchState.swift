@@ -23,7 +23,6 @@ class SyncedWatchState<Value: Syncable> {
             let publisher = instance.objectWillChange as! ObservableObjectPublisher
             enclosingInstance.observableObjectPublisher = publisher
             
-            
             let value = enclosingInstance.thisDevice.value
             print("Getting value \(value)")
             
@@ -47,14 +46,14 @@ class SyncedWatchState<Value: Syncable> {
     var observableObjectPublisher: ObservableObjectPublisher?
     var subscriptions = Set<AnyCancellable>()
     
-    init(wrappedValue: Value) {
-        print("Initializing")
+    init(wrappedValue: Value, _ key: String) {
+        print("Initializing with key: \(key)")
         thisDevice = CurrentValueSubject(wrappedValue)
         
-        let pub = otherDevice
+        let shared = otherDevice
             .share()
             
-        pub
+        shared
             .encode(encoder: JSONEncoder())
             .map { encoded in
                 ["data": encoded]
@@ -67,12 +66,10 @@ class SyncedWatchState<Value: Syncable> {
             }
             .store(in: &subscriptions)
         
-        pub
+        shared
             .subscribe(thisDevice)
             .store(in: &subscriptions)
 
-
-        
         syncedSession
             .publisher
             .compactMap{ $0["data"] as? Data }
@@ -80,11 +77,10 @@ class SyncedWatchState<Value: Syncable> {
             .removeDuplicates()
             .replaceError(with: thisDevice.value)
             .receive(on: DispatchQueue.main)
-//            .subscribe(thisDevice)
-            .sink(receiveValue: { newValue in
-                self.observableObjectPublisher?.send()
-                self.thisDevice.send(newValue)
+            .handleEvents(receiveOutput: { [unowned self] _ in
+                observableObjectPublisher?.send()
             })
+            .subscribe(thisDevice)
             .store(in: &subscriptions)
     }
     
