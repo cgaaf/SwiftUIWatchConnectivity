@@ -47,7 +47,6 @@ class SyncedWatchState<Value: Syncable> {
     var subscriptions = Set<AnyCancellable>()
     
     init(wrappedValue: Value, _ key: String) {
-        print("Initializing with key: \(key)")
         thisDevice = CurrentValueSubject(wrappedValue)
         
         let shared = otherDevice
@@ -55,15 +54,11 @@ class SyncedWatchState<Value: Syncable> {
             
         shared
             .encode(encoder: JSONEncoder())
+            .assertNoFailure()
             .map { encoded in
                 ["data": encoded]
             }
-            .sink { completion in
-                // later
-            } receiveValue: { [unowned self] context in
-                print("Syncronizing context")
-                syncedSession.updateContext(context)
-            }
+            .sink(receiveValue: syncedSession.updateContext)
             .store(in: &subscriptions)
         
         shared
@@ -74,8 +69,8 @@ class SyncedWatchState<Value: Syncable> {
             .publisher
             .compactMap{ $0["data"] as? Data }
             .decode(type: Value.self, decoder: JSONDecoder())
+            .assertNoFailure()
             .removeDuplicates()
-            .replaceError(with: thisDevice.value)
             .receive(on: DispatchQueue.main)
             .handleEvents(receiveOutput: { [unowned self] _ in
                 observableObjectPublisher?.send()
