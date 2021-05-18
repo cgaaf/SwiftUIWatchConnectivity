@@ -30,15 +30,13 @@ class SyncedSession: NSObject, WCSessionDelegate {
     func updateContext(_ applicationContext: [String : Any]) {
         do {
             try session.updateApplicationContext(applicationContext)
-            print("Context sent")
         } catch {
             print("There was an error updating the applicationContext: \(error.localizedDescription)")
         }
     }
     
-    
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        print("Activation state changed to \(activationState)")
+        //
     }
     
     func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {

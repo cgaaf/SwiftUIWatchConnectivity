@@ -49,25 +49,23 @@ class SyncedWatchState<Value: Syncable> {
     init(wrappedValue: Value, _ key: String) {
         thisDevice = CurrentValueSubject(wrappedValue)
         
-        let shared = otherDevice
+        let sharedPublisher = otherDevice
             .share()
             
-        shared
+        sharedPublisher
             .encode(encoder: JSONEncoder())
             .assertNoFailure()
-            .map { encoded in
-                ["data": encoded]
-            }
+            .map { [key: $0] }
             .sink(receiveValue: syncedSession.updateContext)
             .store(in: &subscriptions)
         
-        shared
+        sharedPublisher
             .subscribe(thisDevice)
             .store(in: &subscriptions)
 
         syncedSession
             .publisher
-            .compactMap{ $0["data"] as? Data }
+            .compactMap{ $0[key] as? Data }
             .decode(type: Value.self, decoder: JSONDecoder())
             .assertNoFailure()
             .removeDuplicates()
